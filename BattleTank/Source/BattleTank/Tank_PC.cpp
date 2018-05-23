@@ -24,14 +24,6 @@ void ATank_PC::AimTowardsCrosshair()
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) {
 		GetControlledTank()->AimAt(HitLocation);
-		DrawDebugPoint(
-			GetWorld(),
-			HitLocation,
-			10,
-			FColor(255,0,255),
-			true,
-			0.03
-		);
 	}
 }
 
