@@ -2,14 +2,19 @@
 
 #include "Tank_PC.h"
 #include "GameFramework/Actor.h"
+#include "TankAimingComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 
 void ATank_PC::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
 
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent))
+	{
+		FoundAimingComponent(AimingComponent);
+	}
 }
 
 void ATank_PC::Tick(float DeltaTime)
@@ -20,7 +25,7 @@ void ATank_PC::Tick(float DeltaTime)
 
 void ATank_PC::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) {return;}
+	if (!ensure(GetControlledTank())) {return;}
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) {
 		GetControlledTank()->AimAt(HitLocation);

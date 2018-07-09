@@ -25,17 +25,25 @@ void ATank::Tick(float DeltaTime)
 }
 
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+}
+
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
 {
-	if (!ProjectileBlueprint) { return; }
+	if (!ensure(ProjectileBlueprint && Barrel)) { return; }
+	
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (Barrel && isReloaded) { 
+	if (isReloaded) { 
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),

@@ -18,7 +18,7 @@ void ATankAIController::Tick(float DeltaTime)
 	
 	auto ControlledPawn = Cast<ATank>(GetPawn());
 	auto PlayerPawn = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (PlayerPawn)
+	if (ensure(PlayerPawn))
 	{
 		MoveToActor(PlayerPawn, AcceptanceRadius);
 

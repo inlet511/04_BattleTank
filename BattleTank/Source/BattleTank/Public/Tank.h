@@ -31,6 +31,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void BeginPlay() override;
+
 	UTankBarrel* Barrel = nullptr;
 
 	void AimAt(FVector HitLocation);

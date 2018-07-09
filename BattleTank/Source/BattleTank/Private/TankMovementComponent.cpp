@@ -5,7 +5,7 @@
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	auto TankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s Intend move forward throw:%f"), *TankName, Throw);
+	//UE_LOG(LogTemp, Warning, TEXT("%s Intend move forward throw:%f"), *TankName, Throw);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
@@ -20,7 +20,7 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 
 void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
-	if (!LeftTrackToSet || !RightTrackToSet) { return; }
+	if (!ensure(LeftTrackToSet && RightTrackToSet)) { return; }
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
